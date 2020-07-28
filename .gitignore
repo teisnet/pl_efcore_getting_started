@@ -1,0 +1,14 @@
+# MacOS
+.DS_Store
+
+# Visual Studio .NET
+.vs/
+*.suo
+*.user
+
+# Visual Studio Code
+.vscode/
+
+# .NET Project
+[Bb]in/
+[Oo]bj/
