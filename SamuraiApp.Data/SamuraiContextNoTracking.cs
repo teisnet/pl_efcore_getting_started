@@ -4,12 +4,17 @@ using SamuraiApp.Domain;
 
 namespace SamuraiApp.Data
 {
-  public class SamuraiContext : DbContext
+  public class SamuraiContextNoTracking : DbContext
   {
+    public SamuraiContextNoTracking()
+    {    
+      ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+    }
     public DbSet<Samurai> Samurais { get; set; }
     public DbSet<Quote> Quotes { get; set; }
     public DbSet<Clan> Clans { get; set; }
     public DbSet<Battle> Battles { get; set; }
+    
 
     public static readonly ILoggerFactory ConsoleLoggerFactory
       = LoggerFactory.Create(builder =>
