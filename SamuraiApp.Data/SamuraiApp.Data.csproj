@@ -2,11 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20191212164416_SamuraiBattleStats.cs" />
+    <Compile Remove="Migrations\20191212164416_SamuraiBattleStats.Designer.cs" />
+    <Compile Remove="SamuraiContextNoTracking.cs" />
+  </ItemGroup>
+
    <ItemGroup>
-     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlserver" Version="3.1.0" />
-     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0"/> 
+     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlserver" Version="3.1.0" /> 
+     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" /> 
    </ItemGroup>
 
   <ItemGroup>

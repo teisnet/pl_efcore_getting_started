@@ -1,0 +1,48 @@
+This is SQL you will be adding to custom migration files in this module
+You can copy and paste from here
+
+# TSQL to create value function
+         CREATE FUNCTION[dbo].[EarliestBattleFoughtBySamurai](@samuraiId int)
+          RETURNS char(30) AS
+          BEGIN
+            DECLARE @ret char(30)
+            SELECT TOP 1 @ret = Name
+            FROM Battles
+            WHERE Battles.Id IN(SELECT BattleId
+                               FROM SamuraiBattle
+                              WHERE SamuraiId = @samuraiId)
+            ORDER BY StartDate
+            RETURN @ret
+          END
+
+#TSQL to create view
+          CREATE OR ALTER VIEW dbo.SamuraiBattleStats
+          AS
+          SELECT dbo.Samurais.Name,
+          COUNT(dbo.SamuraiBattle.BattleId) AS NumberOfBattles,
+                  dbo.EarliestBattleFoughtBySamurai(MIN(dbo.Samurais.Id)) AS EarliestBattle
+          FROM dbo.SamuraiBattle INNER JOIN
+               dbo.Samurais ON dbo.SamuraiBattle.SamuraiId = dbo.Samurais.Id
+          GROUP BY dbo.Samurais.Name, dbo.SamuraiBattle.SamuraiId
+
+#TSQL to Create Query Stored Procedure
+            CREATE PROCEDURE dbo.SamuraisWhoSaidAWord
+            @text VARCHAR(20)
+            AS
+            SELECT      Samurais.Id, Samurais.Name, Samurais.ClanId
+            FROM        Samurais INNER JOIN
+                        Quotes ON Samurais.Id = Quotes.SamuraiId
+            WHERE      (Quotes.Text LIKE '%'+@text+'%')
+
+#TSQL to create DELETE stored procedure
+
+          CREATE PROCEDURE dbo.DeleteQuotesForSamurai
+             @samuraiId int
+             AS
+             DELETE FROM Quotes
+             WHERE Quotes.SamuraiId=@samuraiId
+
+  
+
+
+  modelBuilder.Entity<Horse>().ToTable("Horses");
