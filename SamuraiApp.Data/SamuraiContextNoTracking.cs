@@ -4,9 +4,9 @@ using SamuraiApp.Domain;
 
 namespace SamuraiApp.Data
 {
-  public class SamuraiContext : DbContext
+  public class SamuraiContextNoTracking : DbContext
   {
-    public SamuraiContext()
+    public SamuraiContextNoTracking()
     {
       ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
@@ -14,7 +14,6 @@ namespace SamuraiApp.Data
     public DbSet<Quote> Quotes { get; set; }
     public DbSet<Clan> Clans { get; set; }
     public DbSet<Battle> Battles { get; set; }
-    public DbSet<SamuraiBattleStat> SamuraiBattleStats { get; set; }
 
     public static readonly ILoggerFactory ConsoleLoggerFactory
       = LoggerFactory.Create(builder =>
@@ -33,12 +32,12 @@ namespace SamuraiApp.Data
          .EnableSensitiveDataLogging()
          .UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiAppData");
     }
-
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<SamuraiBattle>().HasKey(s => new { s.SamuraiId, s.BattleId });
       modelBuilder.Entity<Horse>().ToTable("Horses");
-      modelBuilder.Entity<SamuraiBattleStat>().HasNoKey().ToView("SamuraiBattleStats");
     }
+
   }
 }
