@@ -11,7 +11,6 @@ namespace ConsoleApp
 
     private static void Main(string[] args)
     {
-      GetSamurais("Before Add:");
       AddSamurai();
       GetSamurais("After Add:");
       Console.Write("Press any key...");

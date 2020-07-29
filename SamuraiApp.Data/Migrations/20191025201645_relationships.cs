@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SamuraiApp.Data.Migrations
 {
-    public partial class newrelationships : Migration
+    public partial class relationships : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Battles",
+                name: "Battle",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,11 +19,11 @@ namespace SamuraiApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Battles", x => x.Id);
+                    table.PrimaryKey("PK_Battle", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Horses",
+                name: "Horse",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -33,9 +33,9 @@ namespace SamuraiApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Horses", x => x.Id);
+                    table.PrimaryKey("PK_Horse", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Horses_Samurais_SamuraiId",
+                        name: "FK_Horse_Samurais_SamuraiId",
                         column: x => x.SamuraiId,
                         principalTable: "Samurais",
                         principalColumn: "Id",
@@ -53,9 +53,9 @@ namespace SamuraiApp.Data.Migrations
                 {
                     table.PrimaryKey("PK_SamuraiBattle", x => new { x.SamuraiId, x.BattleId });
                     table.ForeignKey(
-                        name: "FK_SamuraiBattle_Battles_BattleId",
+                        name: "FK_SamuraiBattle_Battle_BattleId",
                         column: x => x.BattleId,
-                        principalTable: "Battles",
+                        principalTable: "Battle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -67,8 +67,8 @@ namespace SamuraiApp.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Horses_SamuraiId",
-                table: "Horses",
+                name: "IX_Horse_SamuraiId",
+                table: "Horse",
                 column: "SamuraiId",
                 unique: true);
 
@@ -81,13 +81,13 @@ namespace SamuraiApp.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Horses");
+                name: "Horse");
 
             migrationBuilder.DropTable(
                 name: "SamuraiBattle");
 
             migrationBuilder.DropTable(
-                name: "Battles");
+                name: "Battle");
         }
     }
 }

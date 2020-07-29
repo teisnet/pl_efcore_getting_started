@@ -15,7 +15,7 @@ namespace SamuraiApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0-preview3.19554.8")
+                .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -37,7 +37,7 @@ namespace SamuraiApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Battles");
+                    b.ToTable("Battle");
                 });
 
             modelBuilder.Entity("SamuraiApp.Domain.Clan", b =>
@@ -73,7 +73,7 @@ namespace SamuraiApp.Data.Migrations
                     b.HasIndex("SamuraiId")
                         .IsUnique();
 
-                    b.ToTable("Horses");
+                    b.ToTable("Horse");
                 });
 
             modelBuilder.Entity("SamuraiApp.Domain.Quote", b =>
