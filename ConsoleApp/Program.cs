@@ -11,7 +11,7 @@ namespace ConsoleApp
 
     private static void Main(string[] args)
     {
-      context.Database.EnsureCreated();
+      //context.Database.EnsureCreated();
       GetSamurais("Before Add:");
       AddSamurai();
       GetSamurais("After Add:");
