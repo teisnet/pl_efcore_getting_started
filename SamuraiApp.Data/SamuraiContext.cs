@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SamuraiApp.Domain;
 
 namespace SamuraiApp.Data
@@ -12,9 +13,21 @@ namespace SamuraiApp.Data
 		// Though, in order to interact directly with the Battles, a DBSet is needed.
 		public DbSet<Battle> Battles { get; set; }
 
+
+		public static readonly ILoggerFactory ConsoleLoggerFactory = LoggerFactory.Create(builder => {
+			builder
+				.AddFilter((category, level) =>
+					category == DbLoggerCategory.Database.Command.Name
+					&& level == LogLevel.Information
+				)
+				.AddConsole();
+		});
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiAppData");
+			optionsBuilder
+				.UseLoggerFactory(ConsoleLoggerFactory)
+				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiAppData");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
