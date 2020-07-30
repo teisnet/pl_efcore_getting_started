@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
@@ -12,9 +12,9 @@ namespace ConsoleApp
 		static void Main(string[] args)
 		{
 			context.Database.EnsureCreated();
-			GetSamurais("Before add:");
+			GetSamurais("Before add");
 			AddSamurai();
-			GetSamurais("After add:");
+			GetSamurais("After add");
 			Console.WriteLine("Press any key...");
 			Console.ReadKey();
 		}
