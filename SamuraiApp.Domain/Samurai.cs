@@ -17,5 +17,13 @@ namespace SamuraiApp.Domain
 		public List<Quote> Quotes { get; set; }
 		public Clan Clan { get; set; }
 		public List<SamuraiBattle> SamuraiBattles { get; set; }
+
+		// The Horse relationship
+		// To make a one-to-one relationship, the 'Horse' navigation property
+		// along with the foreign key in the Horse class is enough.
+
+		// The dependent end, the Horse, is always optional. The Samurai don't need to have a Horse.
+		// There is no way to apply that constraint in the model or in the database. It can only be done in the businiss logic.
+		public Horse Horse { get; set; }
 	}
 }
