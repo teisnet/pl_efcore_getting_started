@@ -12,7 +12,7 @@ namespace ConsoleApp
 		private static SamuraiContext context = new SamuraiContext();
 		static void Main(string[] args)
 		{
-			context.Database.EnsureCreated();
+			// context.Database.EnsureCreated();
 			// GetSamurais("Before add");
 			// AddSamurai();
 			// GetSamurais("After add");
@@ -20,17 +20,22 @@ namespace ConsoleApp
 			// InstertVariousTypes();
 			// GetSamuraisSimpler();
 			QueryFilters();
-			Console.WriteLine("Press any key...");
-			Console.ReadKey();
+			// GetSamurais("After add multiple");
+			// Console.WriteLine("Press any key...");
+			// Console.ReadKey();
 		}
 
 		private static void QueryFilters()
 		{
-			// var samurais = context.Samurais.Where(s => s.Name == "Sampson").ToList(); // Value is harcoded into SQL.
-			// var name = "Sampson";
-			// context.Samurais.Where(s => s.Name == name).ToList(); // Value is passed as a parameter to SQL.
-			var samurais = context.Samurais.Where(s => EF.Functions.Like(s.Name, "J%")).ToList();
-			var samurais2 = context.Samurais.Where(s => s.Name.StartsWith("J")).ToList(); // Also translates to a SQL 'LIKE* statement.
+			var name = "Sampson";
+
+			// 1 - Where
+			// var samuraiSampson = context.Samurais.Where(s => s.Name == "Sampson").ToList(); // Value is harcoded into SQL.
+			var samuraiSampson = context.Samurais.Where(s => s.Name == name).ToList(); // Value is passed as a parameter to SQL.
+
+			// 2 - Like (StartsWith, etc.)
+			var samuraiLike = context.Samurais.Where(s => EF.Functions.Like(s.Name, "J%")).ToList();
+			var samuraisStartsWith = context.Samurais.Where(s => s.Name.StartsWith("J")).ToList(); // Also translates to a SQL 'LIKE* statement.
 		}
 
 		private static void InstertVariousTypes()
