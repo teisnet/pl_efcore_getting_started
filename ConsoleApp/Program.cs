@@ -22,10 +22,18 @@ namespace ConsoleApp
 			// QueryFilters();
 			// RetrieveAndUpdateSamurai();
 			// RetrieveAndUpdateMultipleSamurai();
-			MultipleDatabaseOperations();
+			// MultipleDatabaseOperations();
+			RetrieveAndDeleteSamurai();
 			// GetSamurais("After add multiple");
 			// Console.WriteLine("Press any key...");
 			// Console.ReadKey();
+		}
+
+		private static void RetrieveAndDeleteSamurai()
+		{
+			var samurai = context.Samurais.Find(3);
+			context.Samurais.Remove(samurai);
+			context.SaveChanges();
 		}
 
 		private static void MultipleDatabaseOperations()
