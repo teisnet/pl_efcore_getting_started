@@ -19,10 +19,36 @@ namespace ConsoleApp
 			// InsertMultipleSamurais();
 			// InstertVariousTypes();
 			// GetSamuraisSimpler();
-			QueryFilters();
+			// QueryFilters();
+			// RetrieveAndUpdateSamurai();
+			// RetrieveAndUpdateMultipleSamurai();
+			MultipleDatabaseOperations();
 			// GetSamurais("After add multiple");
 			// Console.WriteLine("Press any key...");
 			// Console.ReadKey();
+		}
+
+		private static void MultipleDatabaseOperations()
+		{
+			// Multiple different operations will be persisted with SaveChanges
+			var samurai = context.Samurais.FirstOrDefault();
+			samurai.Name += "San";
+			context.Samurais.Add(new Samurai { Name = "Kikuchiyo" });
+			context.SaveChanges();
+		}
+
+		private static void RetrieveAndUpdateMultipleSamurai()
+		{
+			var samurais = context.Samurais.Skip(1).Take(4).ToList();
+			samurais.ForEach(s => s.Name += "San");
+			context.SaveChanges();
+		}
+
+		private static void RetrieveAndUpdateSamurai()
+		{
+			var samurai = context.Samurais.FirstOrDefault();
+			samurai.Name += "San";
+			context.SaveChanges();
 		}
 
 		private static void QueryFilters()
