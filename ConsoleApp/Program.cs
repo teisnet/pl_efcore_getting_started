@@ -23,10 +23,34 @@ namespace ConsoleApp
 			// RetrieveAndUpdateSamurai();
 			// RetrieveAndUpdateMultipleSamurai();
 			// MultipleDatabaseOperations();
-			RetrieveAndDeleteSamurai();
+			// RetrieveAndDeleteSamurai();
 			// GetSamurais("After add multiple");
-			// Console.WriteLine("Press any key...");
-			// Console.ReadKey();
+
+			// InsertBattle();
+			QueryAndUpdateBattle_Disconnected();
+		}
+
+		private static void QueryAndUpdateBattle_Disconnected()
+		{
+			// AsNoTracking returns a query, not a DbSet. DbSet methods like 'Find' won't be available.
+			var battle = context.Battles.AsNoTracking().FirstOrDefault();
+			battle.EndDate = new DateTime(1560, 06, 30);
+
+			using (var newContextInstance = new SamuraiContext())
+			{
+				newContextInstance.Battles.Update(battle);
+				newContextInstance.SaveChanges();
+			}
+		}
+
+		private static void InsertBattle()
+		{
+			context.Battles.Add(new Battle {
+				Name = "Battle of Okehazma",
+				StartDate = new DateTime(1560, 05, 01),
+				EndDate = new DateTime(1560, 06, 15)
+			});
+			context.SaveChanges();
 		}
 
 		private static void RetrieveAndDeleteSamurai()
