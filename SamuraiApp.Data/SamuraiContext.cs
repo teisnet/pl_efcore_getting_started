@@ -27,7 +27,7 @@ namespace SamuraiApp.Data
 		{
 			optionsBuilder
 				.UseLoggerFactory(ConsoleLoggerFactory)
-				// .EnableSensitiveDataLogging() // Log parameter values
+				.EnableSensitiveDataLogging() // Log parameter values
 				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiAppData");
 		}
 
