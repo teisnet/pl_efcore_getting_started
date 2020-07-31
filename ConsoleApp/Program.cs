@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
@@ -12,15 +13,24 @@ namespace ConsoleApp
 		static void Main(string[] args)
 		{
 			context.Database.EnsureCreated();
-			GetSamurais("Before add");
+			// GetSamurais("Before add");
 			// AddSamurai();
 			// GetSamurais("After add");
 			// InsertMultipleSamurais();
 			// InstertVariousTypes();
-			GetSamuraisSimpler();
-			GetSamurais("After add multiple");
+			// GetSamuraisSimpler();
+			QueryFilters();
 			Console.WriteLine("Press any key...");
 			Console.ReadKey();
+		}
+
+		private static void QueryFilters()
+		{
+			// var samurais = context.Samurais.Where(s => s.Name == "Sampson").ToList(); // Value is harcoded into SQL.
+			// var name = "Sampson";
+			// context.Samurais.Where(s => s.Name == name).ToList(); // Value is passed as a parameter to SQL.
+			var samurais = context.Samurais.Where(s => EF.Functions.Like(s.Name, "J%")).ToList();
+			var samurais2 = context.Samurais.Where(s => s.Name.StartsWith("J")).ToList(); // Also translates to a SQL 'LIKE* statement.
 		}
 
 		private static void InstertVariousTypes()
