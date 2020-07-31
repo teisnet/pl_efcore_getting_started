@@ -36,6 +36,16 @@ namespace ConsoleApp
 			// 2 - Like (StartsWith, etc.)
 			var samuraiLike = context.Samurais.Where(s => EF.Functions.Like(s.Name, "J%")).ToList();
 			var samuraisStartsWith = context.Samurais.Where(s => s.Name.StartsWith("J")).ToList(); // Also translates to a SQL 'LIKE* statement.
+
+			// 3 - FirstOrDefault
+			var samuraiByName = context.Samurais.FirstOrDefault(s => s.Name == name);
+
+			// 4 - Find
+			var samuraiById = context.Samurais.Find(2); // Can find objects already tracked in memory.
+
+			// 5 - LastOrDefault (+ OrderBy)
+			// If OrderBy is omitted, the code will always throw an exception.
+			var lastSamurai = context.Samurais.OrderBy(s => s.Id).LastOrDefault(s => s.Name == name);
 		}
 
 		private static void InstertVariousTypes()
