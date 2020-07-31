@@ -16,7 +16,8 @@ namespace ConsoleApp
 			// AddSamurai();
 			// GetSamurais("After add");
 			// InsertMultipleSamurais();
-			InstertVariousTypes();
+			// InstertVariousTypes();
+			GetSamuraisSimpler();
 			GetSamurais("After add multiple");
 			Console.WriteLine("Press any key...");
 			Console.ReadKey();
@@ -58,6 +59,21 @@ namespace ConsoleApp
 				Console.WriteLine(samurai.Name);
 			}
 
+		}
+
+		private static void GetSamuraisSimpler()
+		{
+			// var samurais = context.Samurais.ToList();
+			var query = context.Samurais;
+			
+			var samurais = query.ToList(); // Optional but recommended.
+
+			// Unless ToList() is not called in advanced, the database call will be executed at
+			// foreach and the connection will stay open for the duration of the loop.
+			foreach (var samurai in query)
+			{
+				Console.WriteLine(samurai.Name);
+			}
 		}
 	}
 }
