@@ -47,11 +47,46 @@ namespace ConsoleApp
 			// InsertNewSamuraiWithManyQuotes();
 			// AddingQuoteToExistingSamuraiWhileTracked();
 			// AddingQuoteToExistingSamuraiWhileNotTracked(19);
-			AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
+			// AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
+			EagerLoadSamuraiWithQuotes();
 			#endregion
 		}
 
 		#region Related data
+
+		private static void EagerLoadSamuraiWithQuotes()
+		{
+			// var samuraiWithQuotes = context.Samurais.Include(s => s.Quotes).ToList();
+
+			// 'Include' is a member of DBSet and can't be _after_ an execution method like 'FirstOrDefault'.
+			// Invalid: context.Samurais.FirstOrDefault(s => s.Name.Contains("Kambei")).Include(s => s.Quotes);
+			var samuraiWithQuotes = context.Samurais
+										.Where(s => s.Name.Contains("Kambei"))
+										.Include(s => s.Quotes)
+										// This pics the first _samurai_ NOT the first quote.
+										.FirstOrDefault();
+										// .ToList();
+
+			// IMPORTANT: Include() does now allow to filter _which_ related data
+			// is returned. It always loads the entire set of related objects.
+
+			// Various combinations
+
+			// Include child objects
+			// context.Samurais.Include(s => s.Quotes)
+
+			// Include children and grandchildren:
+			// context.Samurais.Include(s => s.Quotes).ThenInclude(q => q.Translations)
+
+			// Include just grandchildren
+			// Teis question: Where are the translation collection added?
+			// context.Samurais.Include(s => s.Quotes.Translations)
+
+			// Include different children
+			// context.Samurais.Include(s => s.Quotes)
+			//				   .Include(s => s.Clan)
+
+		}
 
 		private static void InsertNewSamuraiWithAQuote()
 		{
