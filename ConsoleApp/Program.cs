@@ -3,12 +3,21 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleApp
 {
 	class Program
 	{
+		/*
+		 * Execution methods;
+		 * ToList()
+		 * FirstOrDeault()
+		 * Find()?
+		 * Single()?
+		 */
+
 		private static SamuraiContext context = new SamuraiContext();
 		static void Main(string[] args)
 		{
@@ -34,12 +43,106 @@ namespace ConsoleApp
 			#endregion
 
 			#region Related data
+			// InsertNewSamuraiWithAQuote();
+			// InsertNewSamuraiWithManyQuotes();
+			// AddingQuoteToExistingSamuraiWhileTracked();
+			// AddingQuoteToExistingSamuraiWhileNotTracked(19);
+			AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
 			#endregion
 		}
 
 		#region Related data
 
+		private static void InsertNewSamuraiWithAQuote()
+		{
+			var samurai = new Samurai
+			{
+				Name = "Kambei Shimada",
+				Quotes = new List<Quote>
+				{
+					new Quote { Text = "I've come to save you" }
+				}
+			};
+			context.Samurais.Add(samurai);
+			context.SaveChanges();
+		}
+		private static void InsertNewSamuraiWithManyQuotes()
+		{
+			var samurai = new Samurai
+			{
+				Name = "Kambei Shimada",
+				Quotes = new List<Quote>
+				{
+						new Quote { Text = "I've come to save you" },
+						new Quote { Text = "I told you to watch out for the sharp sword! Oh well!" }	
+				}
+			};
+			context.Samurais.Add(samurai);
+			context.SaveChanges();
+		}
 
+		private static void AddingQuoteToExistingSamuraiWhileTracked()
+		{
+			var samurai = context.Samurais.FirstOrDefault();
+
+			// It is important that the context is still tracked when adding quotes.
+			samurai.Quotes.Add(new Quote
+			{
+				Text = "I bet you're happy that I've saved you!"
+			});
+			context.SaveChanges();
+		}
+
+
+		private static void AddingQuoteToExistingSamuraiWhileNotTracked(int samuraiId)
+		{
+			var samurai = context.Samurais.Find(samuraiId);
+
+			samurai.Quotes.Add(new Quote
+			{
+				Text = "Now that I saved you, will you feed me dinner?"
+			});
+
+			using (var newContext = new SamuraiContext())
+			{
+				// Use 'Update' to start tracking the graph.
+				// As child's key value is not set state will automatically be set as 'added'
+				// Child's FK valueto parent, 'samuraiId',  is set to parent\s key.
+
+				// Using Update
+				// Update will also make a db call to update the samurai, although no changes has been made
+				// newContext.Samurais.Update(samurai);
+
+				// Using Attach
+				// Use 'attach' instead when adding related objects, not editing the parent itself.
+				// This sets it state to 'unmodified' but still recognized
+				// the missing key and fk in the quote object.
+
+				// ...or just set the fk on the Samurai (se next method)
+				newContext.Samurais.Attach(samurai);
+
+				newContext.SaveChanges();
+			}
+
+		}
+
+		private static void AddingQuoteToExistingSamuraiWhileNotTracked_Easy(int samuraiId)
+		{
+			var quote = new Quote
+			{
+				Text = "Now that I saved you, will you feed me dinner?",
+				// Somewhat 'unclean', but makes everything easier.
+				SamuraiId = samuraiId
+			};
+
+			using (var newContext = new SamuraiContext())
+			{
+				// ...or just set the fk on the Samurai (se next method)
+				newContext.Quotes.Add(quote);
+				newContext.SaveChanges();
+			}
+
+		}
 		#endregion
 
 		#region Simple objects
