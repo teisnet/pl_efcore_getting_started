@@ -5,6 +5,7 @@ using SamuraiApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace ConsoleApp
 {
@@ -48,11 +49,58 @@ namespace ConsoleApp
 			// AddingQuoteToExistingSamuraiWhileTracked();
 			// AddingQuoteToExistingSamuraiWhileNotTracked(19);
 			// AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
-			EagerLoadSamuraiWithQuotes();
+			// EagerLoadSamuraiWithQuotes();
+			// ProjectSomeProperties();
+			ProjectSamuraisWithQuotes();
 			#endregion
 		}
 
 		#region Related data
+
+		private static void ProjectSamuraisWithQuotes()
+		{
+			/* var somePropertiesWithQuotes = context.Samurais
+				// .Select(s => new { s.Id, s.Name, s.Quotes })
+				// .Select(s => new { s.Id, s.Name, s.Quotes.Count })
+				.Select(s => new { s.Id, s.Name, HappyQuotes = s.Quotes.Where(q => q.Text.Contains("save") ) })
+				.ToList();
+			*/
+
+			// Anonymous types are not tracked. Entities that are properties of an anonymous type are tracked.
+
+			var samuraisWithHappyQuotes = context.Samurais
+				.Select(s => new {
+					Samurai = s,
+					HappyQuotes = s.Quotes.Where(q => q.Text.Contains("save"))
+				})
+				.ToList();
+
+			var firstSamurai = samuraisWithHappyQuotes[0].Samurai.Name += " The Happiest";
+
+			// To see that the first samurai actually has been marked as changed:
+			// ChangeTracker: Shift + F9 : "context.ChangeTracker.Entries(), results"
+		}
+
+		public struct IdAndName
+		{
+			public IdAndName(int id, string name)
+			{
+				this.Id = id;
+				this.Name = name;
+			}
+			public int Id { get; }
+			public string Name { get; }
+		}
+
+		private static void ProjectSomeProperties()
+		{
+			// Creates minimal SQL:
+			// SELECT [s].[Id], [s].[Name]
+			// FROM[Samurais] AS[s]
+			// var someProperties = context.Samurais.Select(s => new { s.Id, s.Name }).ToList();
+			var someProperties = context.Samurais.Select(s => new IdAndName( s.Id, s.Name )).ToList();
+			// .. or cast into a list of dynamic types (Teis question: what does that mean?)
+		}
 
 		private static void EagerLoadSamuraiWithQuotes()
 		{
