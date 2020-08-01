@@ -13,9 +13,12 @@ namespace ConsoleApp
 		static void Main(string[] args)
 		{
 			// context.Database.EnsureCreated();
+
+			#region Simple objects
 			// GetSamurais("Before add");
 			// AddSamurai();
 			// GetSamurais("After add");
+
 			// InsertMultipleSamurais();
 			// InstertVariousTypes();
 			// GetSamuraisSimpler();
@@ -27,9 +30,19 @@ namespace ConsoleApp
 			// GetSamurais("After add multiple");
 
 			// InsertBattle();
-			QueryAndUpdateBattle_Disconnected();
+			// QueryAndUpdateBattle_Disconnected();
+			#endregion
+
+			#region Related data
+			#endregion
 		}
 
+		#region Related data
+
+
+		#endregion
+
+		#region Simple objects
 		private static void QueryAndUpdateBattle_Disconnected()
 		{
 			// AsNoTracking returns a query, not a DbSet. DbSet methods like 'Find' won't be available.
@@ -158,5 +171,7 @@ namespace ConsoleApp
 				Console.WriteLine(samurai.Name);
 			}
 		}
+
+		#endregion
 	}
 }
