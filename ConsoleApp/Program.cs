@@ -44,12 +44,18 @@ namespace ConsoleApp
 			#endregion
 
 			#region Related data
+
+			// 6.2 - Insert related data
 			// InsertNewSamuraiWithAQuote();
 			// InsertNewSamuraiWithManyQuotes();
 			// AddingQuoteToExistingSamuraiWhileTracked();
 			// AddingQuoteToExistingSamuraiWhileNotTracked(19);
 			// AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
+
+			// 6.3 - Eager load related data
 			// EagerLoadSamuraiWithQuotes();
+
+			// 6.4 - Project related data in queries
 			// ProjectSomeProperties();
 			// ProjectSamuraisWithQuotes();
 
