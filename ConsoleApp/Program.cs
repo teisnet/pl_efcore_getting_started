@@ -51,8 +51,39 @@ namespace ConsoleApp
 			// AddingQuoteToExistingSamuraiWhileNotTracked_Easy(19);
 			// EagerLoadSamuraiWithQuotes();
 			// ProjectSomeProperties();
-			ProjectSamuraisWithQuotes();
+			// ProjectSamuraisWithQuotes();
+
+			// 6.5 - Load related data for objects already in memory
+			ExplicitLoadQuotes();
+			// LazyLoadQuotes();
+
 			#endregion
+		}
+
+		private static void LazyLoadQuotes()
+		{
+			// This will only work with lazy loading enabled, which is NOT recommended.
+			// Lazy loading is disabled by default.
+			var samurai = context.Samurais.FirstOrDefault(s => s.Name.Contains("Kikuchiyo"));
+			var quoteCount = samurai.Quotes.Count();
+		}
+
+		private static void ExplicitLoadQuotes()
+		{
+			var samurai = context.Samurais.FirstOrDefault(s => s.Name.Contains("Kikuchiyo"));
+			// Load only works for a single object
+			context.Entry(samurai).Collection(s => s.Quotes).Load();
+			context.Entry(samurai).Reference(s => s.Horse).Load();
+
+			/*
+			// Filter loaded data using 'Query'. This only results in one db execution.
+			// (Not possible with eager loading)
+			var happyQuotes = context.Entry(samurai)
+				.Collection(b => b.Quotes)
+				.Query()
+				.Where(q => q.Text.Contains("save"))
+				.ToList();
+			*/
 		}
 
 		#region Related data
