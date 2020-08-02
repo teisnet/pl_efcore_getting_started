@@ -60,10 +60,23 @@ namespace ConsoleApp
 			// ProjectSamuraisWithQuotes();
 
 			// 6.5 - Load related data for objects already in memory
-			ExplicitLoadQuotes();
+			// ExplicitLoadQuotes();
 			// LazyLoadQuotes();
 
+			// 6.6 - Use related data to filter objects
+			FilteringWithRelatedData();
+
 			#endregion
+		}
+
+		private static void FilteringWithRelatedData()
+		{
+			// Use the related data to filter or sort the main object.
+			// This results in only one query.
+			// Other LINQ queries that 'Where' can be used.
+			var samurais = context.Samurais
+				.Where(s => s.Quotes.Any(q => q.Text.Contains("save")))
+				.ToList();
 		}
 
 		private static void LazyLoadQuotes()
