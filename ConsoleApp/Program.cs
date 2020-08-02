@@ -45,6 +45,8 @@ namespace ConsoleApp
 
 			#region Related data
 
+			/** One-to-many relationships (Samurai-Quotes) **/
+
 			// 6.2 - Insert related data
 			// InsertNewSamuraiWithAQuote();
 			// InsertNewSamuraiWithManyQuotes();
@@ -68,9 +70,42 @@ namespace ConsoleApp
 
 			// 6.7 - Modify related data
 			// ModifyingRelatedDataWhenTracked();
-			ModifyingRelatedDataWhenNotTracked();
+			// ModifyingRelatedDataWhenNotTracked();
+
+			/** Many-to-many relationships **/
+
+			// 6.8 - Create and change many-to-many relationships
+			// JoinBattleAndSamurai();
+			// EnlistSamuraiIntoABattle();
+			RemoveJoinBetweenSamuraiAndBattleSimple();
+
 
 			#endregion
+		}
+
+		private static void RemoveJoinBetweenSamuraiAndBattleSimple()
+		{
+			var join = new SamuraiBattle { BattleId = 1, SamuraiId = 11 };
+			// Begin tracking and set state as deleted (only the delete call is performed on the database).
+			context.Remove(join);
+			context.SaveChanges();
+		}
+
+		private static void EnlistSamuraiIntoABattle()
+		{
+			var battle = context.Battles.Find(1);
+			// The change tracker automatically adds the BattleId.
+			battle.SamuraiBattles.Add(new SamuraiBattle { SamuraiId = 11 });
+			context.SaveChanges();
+		}
+
+		private static void JoinBattleAndSamurai()
+		{
+			// Samurai and Battle already exist and we have their id's.
+			var sbJoin = new SamuraiBattle { SamuraiId = 11, BattleId = 1 };
+			// Note, there is no DbSet for the SamuraiBattle class.
+			context.Add(sbJoin);
+			context.SaveChanges();
 		}
 
 		private static void ModifyingRelatedDataWhenNotTracked()
