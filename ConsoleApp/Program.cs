@@ -64,9 +64,38 @@ namespace ConsoleApp
 			// LazyLoadQuotes();
 
 			// 6.6 - Use related data to filter objects
-			FilteringWithRelatedData();
+			// FilteringWithRelatedData();
+
+			// 6.7 - Modify related data
+			// ModifyingRelatedDataWhenTracked();
+			ModifyingRelatedDataWhenNotTracked();
 
 			#endregion
+		}
+
+		private static void ModifyingRelatedDataWhenNotTracked()
+		{
+			var samurai = context.Samurais.Include(s => s.Quotes).FirstOrDefault(s => s.Id == 19);
+			var quote = samurai.Quotes[0];
+			quote.Text = "Did you hear that again?";
+
+			using (var newContext = new SamuraiContext())
+			{
+				// Don't use this. It will update the parent samurai and all its quotes.
+				// Don't use: newContext.Quotes.Update(quote);
+				// ...use this instead. Will only modify the quote in the database.
+				newContext.Entry(quote).State = EntityState.Modified;
+				newContext.SaveChanges();
+
+			}
+		}
+
+		private static void ModifyingRelatedDataWhenTracked()
+		{
+			var samurai = context.Samurais.Include(s => s.Quotes).FirstOrDefault(s => s.Id == 19);
+			samurai.Quotes[0].Text = "Did you hear that?";
+			context.Quotes.Remove(samurai.Quotes[2]);
+			context.SaveChanges();
 		}
 
 		private static void FilteringWithRelatedData()
