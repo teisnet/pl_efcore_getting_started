@@ -80,9 +80,83 @@ namespace ConsoleApp
 			// RemoveJoinBetweenSamuraiAndBattleSimple();
 
 			// 6.9 - Query across many-to-many relationships
-			GetSamuraiWithBattles();
+			// GetSamuraiWithBattles();
+
+			/** One-to-one relationships **/
+
+			// 6.10 - Persist data in one-to-one relationships
+			// AddNewSamuraiWithHorse();
+			// AddNewHorseToSamuraiUsingId();
+			// AddNewHorseToSamuraiObject();
+			// AddNewHorseToDisconnectedSamuraiObject();
+			ReplaceAHorse();
 
 			#endregion
+		}
+
+		private static void ReplaceAHorse()
+		{
+			// Horse already trached in memory:
+
+			var samurai = context.Samurais.Include(s => s.Horse).FirstOrDefault(s => s.Id == 18); // Already has a horse
+
+			/*
+			Will throw, as the horse object needs to be in memory. EF will just send an insert to the db:
+			samurai = context.Samurais.Find(23); // Already has a horse
+			samurai.Horse = new Horse { Name = "Trigger" };
+			*/
+
+			// For 'horse trading' you can also set the horse's SamuraiId to the new samurai owner.
+
+			// The db call will first delete the old horse and the insert the new horse,
+			// because there can not be a horse without a samurai.
+			context.SaveChanges();
+		}
+
+		private static void AddNewHorseToDisconnectedSamuraiObject()
+		{
+			var samurai = context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == 18 );
+			samurai.Horse = new Horse { Name = "Mr. Ed" };
+			samurai.Name += " Draiby";
+			using (var newContext = new SamuraiContext())
+			{
+				// Using the 'Attach' method, there os only one db call inserting into the Horses table.
+				// Teis: What if the Samurai object HAS beed changed? Will it then be updated as well?
+				// Teis: Answer: NO
+				// Teis: Probably no if samurais had foreign horse keys as well.
+				// EF Core sees that the samurai already has an id and will mark it as unchanged.
+				// but because the horse doesn't have an id, so its state will be set to 'added'.
+				newContext.Attach(samurai);
+				newContext.SaveChanges();
+			}
+		}
+
+		private static void AddNewHorseToSamuraiObject()
+		{
+			var samurai = context.Samurais.Find(12);
+			samurai.Horse = new Horse { Name = "Black Beauty" };
+			context.SaveChanges();
+		}
+
+
+		private static void AddNewHorseToSamuraiUsingId()
+		{
+			var horse = new Horse { Name = "Scout", SamuraiId = 22 };
+			// Since there is no Horse DbSet the horse can be added directly to the context.
+			context.Add(horse);
+			context.SaveChanges();
+		}
+
+		private static void AddNewSamuraiWithHorse()
+		{
+			// EF will shrow an error if it already has a horse.
+			// Solve this in the businiss logic.
+			// Consider also adding a foreign 'Horse' key in the 'Samurai' class.
+			// Results in two db calls, one for the samurai and one for the horse using the new samuraiId.
+			var samurai = new Samurai { Name = "Jina Ujichika" };
+			samurai.Horse = new Horse { Name = "Silver" };
+			context.Samurais.Add(samurai);
+			context.SaveChanges();
 		}
 
 		private static void GetSamuraiWithBattles()
