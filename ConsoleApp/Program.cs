@@ -77,10 +77,32 @@ namespace ConsoleApp
 			// 6.8 - Create and change many-to-many relationships
 			// JoinBattleAndSamurai();
 			// EnlistSamuraiIntoABattle();
-			RemoveJoinBetweenSamuraiAndBattleSimple();
+			// RemoveJoinBetweenSamuraiAndBattleSimple();
 
+			// 6.9 - Query across many-to-many relationships
+			GetSamuraiWithBattles();
 
 			#endregion
+		}
+
+		private static void GetSamuraiWithBattles()
+		{
+			// Creates one db call fetching samurai 19 and related data
+			// Using 'Include' unfortunately we have to go through all samuraibattles to finally retrieve the battles.
+			/* var samuraiWithBattles = context.Samurais
+				.Include(s => s.SamuraiBattles)
+				.ThenInclude(b => b.Battle)
+				.FirstOrDefault(samurai => samurai.Id == 19);
+			*/
+
+			// Use projection instead:
+			var samuraiWithBattles = context.Samurais.Where(s => s.Id == 19)
+				.Select(s => new
+				{
+					Samurai = s,
+					Battles = s.SamuraiBattles.Select( sb => sb.Battle)
+				})
+				.FirstOrDefault(); // Teis: Is this on the samurai level?
 		}
 
 		private static void RemoveJoinBetweenSamuraiAndBattleSimple()
