@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace SamuraiApp.Domain
 {
+	/*
+	 * 'Battle' has a many-to-many relationship with 'Samurai' using SamuraiBattle as joint table
+	 */
+
 	public class Battle
 	{
 		public Battle()

@@ -1,5 +1,9 @@
 ﻿namespace SamuraiApp.Domain
 {
+	/*
+	 * 'Horse' has a one-to-one relationship with 'Samurai'
+	 */
+
 	public class Horse
 	{
 		// Question: How to make sure that there are only one horse points to the same samurai (only allowing unique values for the field)

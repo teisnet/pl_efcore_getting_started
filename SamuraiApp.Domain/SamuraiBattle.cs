@@ -4,6 +4,11 @@ using System.Text;
 
 namespace SamuraiApp.Domain
 {
+	/*
+	 * 'SamuraiBattle' is the joint table for the
+	 * many-to-many relationship between 'Samurai' and 'Battle'.
+	 */
+
 	public class SamuraiBattle
 	{
 		// The key values are required

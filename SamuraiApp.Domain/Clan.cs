@@ -1,5 +1,9 @@
-namespace SamuraiApp.Domain
+﻿namespace SamuraiApp.Domain
 {
+	/*
+	 * 'Clan' has a one-to-many relationship with 'Samurai'
+	 */
+
 	public class Clan
 	{
 		public int Id { get; set; }
