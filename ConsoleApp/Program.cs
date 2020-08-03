@@ -89,9 +89,39 @@ namespace ConsoleApp
 			// AddNewHorseToSamuraiUsingId();
 			// AddNewHorseToSamuraiObject();
 			// AddNewHorseToDisconnectedSamuraiObject();
-			ReplaceAHorse();
+			// ReplaceAHorse();
+
+			// 6.11 - Query one-to-one relationships
+			// GetSamuraiWithHorse();
+			GetHorseWithSamurai();
 
 			#endregion
+		}
+
+		private static void GetHorseWithSamurai()
+		{
+			// Use 'context.Set<Horse>()' when a DbContext doesn't exist for the object type.
+			var horseWithoutSamurai = context.Set<Horse>().Find(11);
+
+			// Include
+			// Get the samurai that has the horse with id=3.
+			// This can be used when the Horse class doesn't have a Samurai navigation property.
+			var horseWithSamurai = context.Samurais.Include(s => s.Horse)
+				.FirstOrDefault(s => s.Horse.Id == 3);
+
+			// Projection
+			// Get an { Samurai, Horse } object list, only for samurais that have a horse.
+			// Again, this can be used whern the Horse class doesn't have a Samurai navigation property.
+			var horseWithSamurais = context.Samurais
+				.Where(s => s.Horse != null)
+				.Select(s => new { Horse = s.Horse, Samurai = s })
+				.ToList();
+		}
+
+		private static void GetSamuraiWithHorse()
+		{
+			// Get all the samurais with their Horses list populated.
+			var samurais = context.Samurais.Include(s => s.Horse).ToList();
 		}
 
 		private static void ReplaceAHorse()
