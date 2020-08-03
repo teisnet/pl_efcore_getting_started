@@ -93,9 +93,26 @@ namespace ConsoleApp
 
 			// 6.11 - Query one-to-one relationships
 			// GetSamuraiWithHorse();
-			GetHorseWithSamurai();
+			// GetHorseWithSamurai();
+
+			// 6.12 - Working with a relationship that has minimal properties
+			// GetSamuraiWithClan();
+			GetClanWithSamurais();
 
 			#endregion
+		}
+
+		private static void GetClanWithSamurais()
+		{
+			// The clan has no Samurais property: var clan = context.Clans.Include(c => c.???);
+			var clan = context.Clans.Find(1); // clanId
+			// Note: The Clan property is populated.
+			var samuraisForClan = context.Samurais.Where(s => s.Clan.Id == 1).ToList();
+		}
+
+		private static void GetSamuraiWithClan()
+		{
+			var samurai = context.Samurais.Include(s => s.Clan).FirstOrDefault();
 		}
 
 		private static void GetHorseWithSamurai()

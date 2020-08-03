@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +15,8 @@ namespace SamuraiApp.Domain
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public List<Quote> Quotes { get; set; }
+
+		// ClanId is left out make turorial challenge harder (including list of samurais in Clan).
 		public Clan Clan { get; set; }
 		public List<SamuraiBattle> SamuraiBattles { get; set; }
 
