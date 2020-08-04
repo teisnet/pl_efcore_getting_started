@@ -11,14 +11,6 @@ namespace ConsoleApp
 {
 	class Program
 	{
-		/*
-		 * Execution methods;
-		 * ToList()
-		 * FirstOrDeault()
-		 * Find()?
-		 * Single()?
-		 */
-
 		static void Main(string[] args)
 		{
 		}
