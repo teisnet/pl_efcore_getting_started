@@ -16,7 +16,7 @@ namespace ConsoleApp.Tutorial
 
 		private static SamuraiContext context = new SamuraiContext();
 
-		public void Run()
+		public static void Run()
 		{
 			// 6.2 - Insert related data
 			// InsertNewSamuraiWithAQuote();

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ConsoleApp.Tutorial
 {
-	public class Module5
+	public class Module5Simple
 	{
 		/* Module 5 - Interact With the EF Core Data Model
 		 * (Simple objects)
@@ -47,7 +47,7 @@ namespace ConsoleApp.Tutorial
 
 		private static SamuraiContext context = new SamuraiContext();
 
-		public void Run()
+		public static void Run()
 		{
 			// 5.4 - Benefit from bulk operations support
 			// InsertMultipleSamurais();

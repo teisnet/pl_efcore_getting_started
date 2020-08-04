@@ -15,7 +15,7 @@ namespace ConsoleApp.Tutorial
 
 		private static SamuraiContext context = new SamuraiContext();
 
-		public void Run()
+		public static void Run()
 		{
 			// 6.8 - Create and change many-to-many relationships
 			// JoinBattleAndSamurai();
