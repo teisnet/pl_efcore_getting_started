@@ -1,7 +1,6 @@
-using SamuraiApp.Data;
+﻿using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleApp.Tutorial
@@ -12,11 +11,11 @@ namespace ConsoleApp.Tutorial
 
 		public static void Run()
 		{
-			// context.Database.EnsureCreated();
+			context.Database.EnsureCreated();
 
-			// GetSamurais("Before add");
-			// AddSamurai();
-			// GetSamurais("After add");
+			GetSamurais("Before add");
+			AddSamurai();
+			GetSamurais("After add");
 		}
 
 		private static void AddSamurai()
