@@ -18,7 +18,8 @@ namespace ConsoleApp
 			// Module5Simple.Run();
 			// Module61OneToMany.Run();
 			// Module62ManyToMany.Run();
-			Module63OneToOne.Run();
+			// Module63OneToOne.Run();
+			Module7.Run();
 		}
 	}
 }
