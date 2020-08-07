@@ -15,7 +15,8 @@ namespace ConsoleApp.Tutorial
 		{
 			// QuerySamuraiBattleStats();
 			// QueryUsingRawSql();
-			QueryUsingRawSqlWithInterpolation();
+			// QueryUsingRawSqlWithInterpolation();
+			QueryUsingFromRawSqlStoredProc();
 		}
 
 		private static void QuerySamuraiBattleStats()
@@ -55,6 +56,17 @@ namespace ConsoleApp.Tutorial
 			// ALWAYS use 'FromSqlInterpolated' and NOT 'FromSqlRaw' with an interpolated string to avoid SQL injection attacks.
 			string name = "Kikuchiyo";
 			var samurais = context.Samurais.FromSqlInterpolated($"Select * from Samurais Where Name = {name}").ToList();
+		}
+
+		private static void QueryUsingFromRawSqlStoredProc()
+		{
+			var text = "Save"; // Seems to be case insensitive.
+		
+			// Both OK.
+			// var samurais = context.Samurais.FromSqlRaw("EXEC dbo.SamuraisWhoSaidAWord {0}", text).ToList();
+			var samurais = context.Samurais.FromSqlInterpolated($"EXEC dbo.SamuraisWhoSaidAWord {text}").ToList();
+			
+			// Queries can be extended by LINQ. If EF is not able to sort out the query it will throw at _runtime_!
 		}
 	}
 }
