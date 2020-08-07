@@ -16,7 +16,8 @@ namespace ConsoleApp.Tutorial
 			// QuerySamuraiBattleStats();
 			// QueryUsingRawSql();
 			// QueryUsingRawSqlWithInterpolation();
-			QueryUsingFromRawSqlStoredProc();
+			// QueryUsingFromRawSqlStoredProc();
+			ExecuteSomeRawSql();
 		}
 
 		private static void QuerySamuraiBattleStats()
@@ -65,8 +66,15 @@ namespace ConsoleApp.Tutorial
 			// Both OK.
 			// var samurais = context.Samurais.FromSqlRaw("EXEC dbo.SamuraisWhoSaidAWord {0}", text).ToList();
 			var samurais = context.Samurais.FromSqlInterpolated($"EXEC dbo.SamuraisWhoSaidAWord {text}").ToList();
-			
+
 			// Queries can be extended by LINQ. If EF is not able to sort out the query it will throw at _runtime_!
+		}
+
+		private static void ExecuteSomeRawSql()
+		{
+			var samuraiId = 19;
+			// var x = context.Database.ExecuteSqlRaw("EXEC DeleteQuotesFromSamurai {0}", samuraiId);
+			var x = context.Database.ExecuteSqlInterpolated($"EXEC DeleteQuotesFromSamurai {samuraiId}");
 		}
 	}
 }
