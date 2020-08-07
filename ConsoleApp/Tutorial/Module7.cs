@@ -1,4 +1,5 @@
-﻿using SamuraiApp.Data;
+using Microsoft.EntityFrameworkCore;
+using SamuraiApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,9 @@ namespace ConsoleApp.Tutorial
 
 		public static void Run()
 		{
-			QuerySamuraiBattleStats();
+			// QuerySamuraiBattleStats();
+			// QueryUsingRawSql();
+			QueryUsingRawSqlWithInterpolation();
 		}
 
 		private static void QuerySamuraiBattleStats()
@@ -26,6 +29,32 @@ namespace ConsoleApp.Tutorial
 
 			//var sampsonStat = context.SamuraiBattleStats.Where(s => s.Name == "Kambei Shimada").FirstOrDefault();
 			// Makes no sense and throws: context.SamuraiBattleStats.Find(22);
+		}
+
+		private static void QueryUsingRawSql()
+		{
+			// 'FromSqlRaw' or 'FromSqlInterpolated' needs to be executed against a defined DbSet.
+			
+			// 'FromSqlRaw' returns a query so a LINQ execution method is needed.
+			// The result will be tracked by EF.
+			
+			// SQL requirements:
+			// 1) Must return data for all properties of the entity type.
+			// 2) Coulmn names in the results must match mapped coulmn names (in the entity's table (eg. use clanId and not Clan))
+			// 3) Query can't contain related data.
+			// 4) Qnly query entities and keyless entities known by the DbContext.
+
+			// var samurais = context.Samurais.FromSqlRaw("Select * from Samurais").ToList();
+			var samurais = context.Samurais.FromSqlRaw("Select Id, Name, ClanId from Samurais").Include(s => s.Quotes).ToList();
+
+			// Stored procedures are not 'composable'
+		}
+
+		private static void QueryUsingRawSqlWithInterpolation()
+		{
+			// ALWAYS use 'FromSqlInterpolated' and NOT 'FromSqlRaw' with an interpolated string to avoid SQL injection attacks.
+			string name = "Kikuchiyo";
+			var samurais = context.Samurais.FromSqlInterpolated($"Select * from Samurais Where Name = {name}").ToList();
 		}
 	}
 }
