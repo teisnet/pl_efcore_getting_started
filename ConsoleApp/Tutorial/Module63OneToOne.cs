@@ -15,7 +15,7 @@ namespace ConsoleApp.Tutorial
 		*  Also: Relationship with minimal properties (Samurai-clan)
 		*/
 
-		private static SamuraiContext context = new SamuraiContext();
+		private static SamuraiConsoleContext context = new SamuraiConsoleContext();
 
 		public static void Run()
 		{
@@ -98,7 +98,7 @@ namespace ConsoleApp.Tutorial
 			var samurai = context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == 18);
 			samurai.Horse = new Horse { Name = "Mr. Ed" };
 			samurai.Name += " Draiby";
-			using (var newContext = new SamuraiContext())
+			using (var newContext = new SamuraiConsoleContext())
 			{
 				// Using the 'Attach' method, there os only one db call inserting into the Horses table.
 				// Teis: What if the Samurai object HAS beed changed? Will it then be updated as well?

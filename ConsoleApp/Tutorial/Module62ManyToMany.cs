@@ -13,7 +13,7 @@ namespace ConsoleApp.Tutorial
 		*  Second part: Many-to-many relationships (Samurai-Battles)
 		*/
 
-		private static SamuraiContext context = new SamuraiContext();
+		private static SamuraiConsoleContext context = new SamuraiConsoleContext();
 
 		public static void Run()
 		{

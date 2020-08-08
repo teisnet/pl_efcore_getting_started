@@ -45,7 +45,7 @@ namespace ConsoleApp.Tutorial
 		 * Remove, RemoveRange
 		 */
 
-		private static SamuraiContext context = new SamuraiContext();
+		private static SamuraiConsoleContext context = new SamuraiConsoleContext();
 
 		public static void Run()
 		{
@@ -81,7 +81,7 @@ namespace ConsoleApp.Tutorial
 			var battle = context.Battles.AsNoTracking().FirstOrDefault();
 			battle.EndDate = new DateTime(1560, 06, 30);
 
-			using (var newContextInstance = new SamuraiContext())
+			using (var newContextInstance = new SamuraiConsoleContext())
 			{
 				// Update: Context will start tracking the object and mark its state as 'modified'
 				// Teis: I think 'Update' is only used in disconnected scenarios

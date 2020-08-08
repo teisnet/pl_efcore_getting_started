@@ -14,7 +14,7 @@ namespace ConsoleApp.Tutorial
 		*  First part: One-to-many relationships (Samurai-Quotes)
 		*/
 
-		private static SamuraiContext context = new SamuraiContext();
+		private static SamuraiConsoleContext context = new SamuraiConsoleContext();
 
 		public static void Run()
 		{
@@ -50,7 +50,7 @@ namespace ConsoleApp.Tutorial
 			var quote = samurai.Quotes[0];
 			quote.Text = "Did you hear that again?";
 
-			using (var newContext = new SamuraiContext())
+			using (var newContext = new SamuraiConsoleContext())
 			{
 				// Don't use this. It will update the parent samurai and all its quotes.
 				// Don't use: newContext.Quotes.Update(quote);
@@ -234,7 +234,7 @@ namespace ConsoleApp.Tutorial
 				Text = "Now that I saved you, will you feed me dinner?"
 			});
 
-			using (var newContext = new SamuraiContext())
+			using (var newContext = new SamuraiConsoleContext())
 			{
 				// Use 'Update' to start tracking the graph.
 				// As child's key value is not set state will automatically be set as 'added'
@@ -265,7 +265,7 @@ namespace ConsoleApp.Tutorial
 				SamuraiId = samuraiId
 			};
 
-			using (var newContext = new SamuraiContext())
+			using (var newContext = new SamuraiConsoleContext())
 			{
 				// ...or just set the fk on the Samurai (se next method)
 				newContext.Quotes.Add(quote);

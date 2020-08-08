@@ -9,7 +9,7 @@ namespace ConsoleApp.Tutorial
 {
 	public class Module7
 	{
-		private static SamuraiContext context = new SamuraiContext();
+		private static SamuraiConsoleContext context = new SamuraiConsoleContext();
 
 		public static void Run()
 		{
