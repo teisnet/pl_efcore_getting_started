@@ -11,14 +11,14 @@ content-type: application/json
 
 ###
 
-PUT http://localhost:5000/api/Samurais/1 HTTP/1.1
+PUT http://localhost:5000/api/Samurais/11 HTTP/1.1
 content-type: application/json
 
 {
-    "id": 1,
+    "id": 11,
     "name": "Julie"
 }
 
-DELETE  http://localhost:5000/api/Samurais/33
+DELETE  http://localhost:5000/api/Samurais/15
 
-DELETE  http://localhost:5000/api/Samurais/sproc/31
+DELETE  http://localhost:5000/api/Samurais/sproc/21

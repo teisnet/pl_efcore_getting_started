@@ -53,6 +53,9 @@ namespace SamuraiApi.Controllers
                 return BadRequest();
             }
 
+            // Using the 'Entry' method to ensure no attached data is included in the update,
+            // as this controller medhod is only intended to update a samurai.
+            // 'Entry' will only update the main object and ignore anything that is connected to it.
             _context.Entry(samurai).State = EntityState.Modified;
 
             try
@@ -71,6 +74,7 @@ namespace SamuraiApi.Controllers
                 }
             }
 
+            // 204 No content
             return NoContent();
         }
 
@@ -96,11 +100,21 @@ namespace SamuraiApi.Controllers
                 return NotFound();
             }
 
+            // Using 'Remove' and not 'Context.Entry' as the code knows that it only retrieved a Samurai, not a graph with related data.
+            // Teis question: how can the code be sure about that?
             _context.Samurais.Remove(samurai);
             await _context.SaveChangesAsync();
 
             return samurai;
         }
+
+        // DELETE using stored procedure
+        [HttpDelete("sproc/{id}")]
+        public async Task<ActionResult<string>> DeleteQuotesForSamurai(int id)
+		{
+            var rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC DeleteQuotesFromSamurai {id}");
+            return $"{rowsAffected} Quotes deleted";
+		}
 
         private bool SamuraiExists(int id)
         {
