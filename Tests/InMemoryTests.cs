@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
@@ -12,19 +13,23 @@ namespace Tests
 		[TestMethod]
 		public void CanInsertSamuraiIntoDatabase()
 		{
-			using (var context = new SamuraiConsoleContext())
+			var builder = new DbContextOptionsBuilder();
+
+			// Passing a name so the db can be used elsewhere using 'UseInMemoryDatabase' again.
+			builder.UseInMemoryDatabase("CanInsertSamurai");
+
+			using (var context = new SamuraiConsoleContext(builder.Options))
 			{
 				// context.Database.EnsureDeleted(); // Takes long time
-				context.Database.EnsureCreated();
+				// 'EnsureCreated' can be used to seed the database with the EF Core migrations
+				// context.Database.EnsureCreated();
 				var samurai = new Samurai();
-				// Properties are non-nullable needs to be populated in advance, eg. the 'Name' field.
 				context.Samurais.Add(samurai);
-				Debug.WriteLine($"Before save: {samurai.Id}");
-
-				context.SaveChanges();
-				Debug.WriteLine($"After save: {samurai.Id}");
-
-				Assert.AreNotEqual(0, samurai.Id);
+				// Properties are non-nullable needs to be populated in advance, eg. the 'Name' field.
+				// Because the InMemory database is used, the samurai already gets its id when using 'Add', not 'SaveChanges'
+				// 'SaveChanges' only make sense when testing with a real databse.
+				// Use 'Samurais.Count' to check if added or:
+				Assert.AreEqual(EntityState.Added, context.Entry(samurai).State);
 			}
 		}
 	}
