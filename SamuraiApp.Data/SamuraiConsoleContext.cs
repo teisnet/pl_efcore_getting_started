@@ -6,6 +6,12 @@ namespace SamuraiApp.Data
 {
 	public class SamuraiConsoleContext : DbContext
 	{
+		public SamuraiConsoleContext()
+		{ }
+
+		public SamuraiConsoleContext(DbContextOptions options) : base(options)
+		{ }
+
 		public DbSet<Samurai> Samurais { get; set; }
 		public DbSet<Quote> Quotes { get; set; }
 		public DbSet<Clan> Clans { get; set; }
@@ -26,10 +32,13 @@ namespace SamuraiApp.Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder
-				// .UseLoggerFactory(ConsoleLoggerFactory)
-				// .EnableSensitiveDataLogging() // Log parameter values
-				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiTestData");
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder
+					// .UseLoggerFactory(ConsoleLoggerFactory)
+					// .EnableSensitiveDataLogging() // Log parameter values
+					.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiTestData");
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
