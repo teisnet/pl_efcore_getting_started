@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApp.Data", "SamuraiA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{166C668E-E058-4EBA-97E0-A1B82DF0C6F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamuraiApi", "SamuraiApi\SamuraiApi.csproj", "{11590515-AF9B-44B7-9452-58DC56683DB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApi", "SamuraiApi\SamuraiApi.csproj", "{11590515-AF9B-44B7-9452-58DC56683DB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{AD12D22F-220C-47D2-97B4-5B904C71C816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{11590515-AF9B-44B7-9452-58DC56683DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11590515-AF9B-44B7-9452-58DC56683DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11590515-AF9B-44B7-9452-58DC56683DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD12D22F-220C-47D2-97B4-5B904C71C816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD12D22F-220C-47D2-97B4-5B904C71C816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD12D22F-220C-47D2-97B4-5B904C71C816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD12D22F-220C-47D2-97B4-5B904C71C816}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
