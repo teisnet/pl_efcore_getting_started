@@ -1,12 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using SamuraiApp.Data;
-using SamuraiApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using ConsoleApp.Tutorial;
+using System;
 
 namespace ConsoleApp
 {
@@ -19,7 +12,17 @@ namespace ConsoleApp
 			// Module61OneToMany.Run();
 			// Module62ManyToMany.Run();
 			// Module63OneToOne.Run();
-			Module7.Run();
+			// Module7.Run();
+
+			// Module 9 - Testing
+			InsertMultipleSamurais();
+		}
+
+		private static void InsertMultipleSamurais()
+		{
+			var _bizdata = new BusinessDataLogic();
+			var samuraiNames = new string[] { "Sampson", "Tasha", "Number3", "Number4" };
+			var newSamuraisCreated = _bizdata.AddMultipleSamurais(samuraiNames);
 		}
 	}
 }
