@@ -29,7 +29,7 @@ namespace SamuraiApp.Data
 			optionsBuilder
 				// .UseLoggerFactory(ConsoleLoggerFactory)
 				// .EnableSensitiveDataLogging() // Log parameter values
-				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiAppData");
+				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = SamuraiTestData");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
