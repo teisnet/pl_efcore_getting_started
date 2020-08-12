@@ -1,4 +1,4 @@
-﻿using SamuraiApp.Data;
+using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,12 @@ namespace ConsoleApp
 		public BusinessDataLogic()
 		{
 			_context = new SamuraiConsoleContext();
+
+			// Issue: When creating the 'SamuraiTestData' DB from the SamuraiConsoleContext the Functions
+			// and Stored Procedures are not created.
+			// Create and rename the 'SamuraiAppData' db created by the SamuraiContext.
+			
+			// Issue: _context.Database.EnsureCreated();
 		}
 
 		public int AddMultipleSamurais(string[] nameList)
