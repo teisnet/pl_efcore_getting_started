@@ -1,7 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ConsoleApp
@@ -44,6 +46,14 @@ namespace ConsoleApp
 			_context.Samurais.Add(samurai);
 			var dbResult = _context.SaveChanges();
 			return dbResult;
+		}
+
+		public Samurai GetSamuraiWithQuotes(int samuraiId)
+		{
+			var samuraiWithQuotes = _context.Samurais.Where(s => s.Id == samuraiId)
+													 .Include(s => s.Quotes)
+													 .FirstOrDefault();
+			return samuraiWithQuotes;
 		}
 	}
 }
