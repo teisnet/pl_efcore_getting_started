@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
@@ -43,7 +43,7 @@ namespace Tests
 
 			using (var context2 = new SamuraiConsoleContext(builder.Options))
 			{
-				Assert.AreEqual (1, context2.Samurais.Count());
+				Assert.AreEqual(1, context2.Samurais.Count());
 			}
 		}
 
