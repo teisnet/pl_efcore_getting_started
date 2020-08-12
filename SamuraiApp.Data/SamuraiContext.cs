@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Logging;
 using SamuraiApp.Domain;
 
 namespace SamuraiApp.Data
@@ -12,7 +11,6 @@ namespace SamuraiApp.Data
     {
       ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
     }
-
     public DbSet<Samurai> Samurais { get; set; }
     public DbSet<Quote> Quotes { get; set; }
     public DbSet<Clan> Clans { get; set; }
